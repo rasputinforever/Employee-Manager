@@ -42,6 +42,9 @@ function initEmpMan() {
                     
                 empSummary(res)
                 break;
+            case 'Department Summaries':
+                empSummary();
+                break;
             default:
                 console.log("coming soon!")
                 break;
@@ -56,5 +59,23 @@ function empSummary() {
     getAllQuery().then((data) => {
         console.log("Employee Summary...")
         console.table(data);
+    })
+}
+
+function empSummary() {
+    getAllQuery().then((data) => {
+        // get a list of distinct deps
+        let depList = [];
+        let dupeCheck;
+        data.forEach(employee => {
+            dupeCheck = depList.indexOf(employee.department) === -1;
+            
+            if (dupeCheck) {
+                depList = [...depList, employee.department];
+            }
+        });
+        console.log(depList);
+        // inquire about them
+        // display full list of information about the department
     })
 }
