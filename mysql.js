@@ -2,21 +2,44 @@
 // look into console.table once we have our queries set up
 
 var mysql = require('mysql');
+const cTable = require('console.table');
 
-var conn = mysql.createConnection({
+const connection = mysql.createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "*",
+  password: "-",
   database: "employeedb"
 });
 
-conn.connect((err)=>{
-  if (err) throw err;
-  
-  conn.query("SELECT * FROM departments", (err, result, fields)=>{
-    if (err) throw err;
-    console.log(result);
-  });
-});
+// get a list of departments as an array, that will go into an inquirer. This setup works in the correct order using Pormise
 
-console.log("test")
+function departmentListQuery(){
+    function departmentQuery() {
+        return new Promise((resolve, reject) => {
+            const queryText = 
+            `SELECT * FROM departments
+            `
+            connection.connect();
+            connection.query(queryText, function (error, results, fields) {        
+            if (error) throw error;
+            if (results) {
+                resolve(results)
+            } else (
+                console.log("Failed to retrieve Department List")
+            )  
+            });
+        });
+      }
+    
+    departmentQuery().then((data) => {    
+        let depList = [];
+        data.forEach(dep => {
+            depList = [...depList, dep.dep_name];            
+        });
+        console.log(depList);
+        connection.end();
+        console.log("End of Task")
+    });
+}
+
+departmentListQuery();
