@@ -37,12 +37,14 @@ function initEmpMan() {
     }]).then((res) => {
         // get the read info here. Used for ALL subsequent functions!
         switch(res.function) {
-            case 'Employee Summaries':
-                    
+            case 'Employee Summaries':        
                 empSummary(res)
                 break;
             case 'Department Summaries':
                 empSummary();
+                break;
+            case 'Summary of Job Titles':
+                titleSUmmary();
                 break;
             default:
                 console.log("coming soon!")
@@ -106,3 +108,49 @@ function empSummary() {
         })
     })
 }
+
+function titleSUmmary() {
+    getAllQuery().then((data) => {
+        // get a list of distinct deps using the same query
+        let titleList = [];
+        let dupeCheck;
+        data.forEach(employee => {
+            dupeCheck = titleList.indexOf(employee.title) === -1;            
+            if (dupeCheck) {
+                titleList = [...titleList, employee.title];
+            }
+        });
+
+        // inquire which summary we need
+        inquirer.prompt({
+            name: 'title',
+            type: 'list',
+            choices: titleList,
+            message: 'Which title would you like a summary of?'
+        }).then((res) => {
+            console.log('Summary for ', res.title)
+            // ok now do a summary! haha! Re-organize desired data into an object which will be displayed
+            let titlObj = {
+                Title: res.title,
+                Employees: [],
+                Managers: [],
+                Salary: 0.00
+            }
+            // get a list of all employees currently with that title
+            data.forEach(employee => {
+                if (employee.title === titlObj.Title) {
+                    titlObj.Employees = [...titlObj.Employees, employee.name];
+                    titlObj.Salary = employee.salary; 
+                } 
+            });
+            // get manager(s)
+
+            // get salary(s)
+            
+            titlObj.Salary = `$${titlObj.Salary}`
+            // display final table of info
+            console.table(titlObj);
+        })
+    })
+}
+
