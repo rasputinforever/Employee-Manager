@@ -21,7 +21,6 @@
 
 // npms
 const inquirer = require('inquirer');
-
 const cTable = require('console.table');
 
 // modules
@@ -74,7 +73,7 @@ function empSummary() {
             }
         });
 
-        // inquire about them
+        // inquire which summary we need
         inquirer.prompt({
             name: 'department',
             type: 'list',
@@ -82,25 +81,26 @@ function empSummary() {
             message: 'Which department would you like a summary of?'
         }).then((res) => {
             console.log('Summary for ', res.department)
-            // ok now do a summary! haha!
+            // ok now do a summary! haha! Re-organize desired data into an object which will be displayed
             let depObj = {
-                name: res.department,
-                managers: [],
-                employees: [],
-                totalSalary: 0.00
+                Department: res.department,
+                Managers: [],
+                Employees: [],
+                Total_Salary: 0.00
             }
-            
+
             data.forEach(employee => {
-                if (employee.department === depObj.name) {
-                    depObj.employees = [...depObj.employees, employee.name];
-                    depObj.totalSalary += employee.salary; 
+                if (employee.department === depObj.Department) {
+                    depObj.Employees = [...depObj.Employees, employee.name];
+                    depObj.Total_Salary += employee.salary; 
                     // manager check
                     if (employee.title.includes('Manager')) {
-                        depObj.managers = [...depObj.managers, employee.name];
-                    }
-                }
+                        depObj.Managers.push(employee.name);
+                    } 
+                } 
             });
-            depObj.totalSalary = `$${depObj.totalSalary}`
+
+            depObj.Total_Salary = `$${depObj.Total_Salary}`
             // display final table of info
             console.table(depObj);
         })
