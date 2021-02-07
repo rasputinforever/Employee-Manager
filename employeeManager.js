@@ -64,18 +64,45 @@ function empSummary() {
 
 function empSummary() {
     getAllQuery().then((data) => {
-        // get a list of distinct deps
+        // get a list of distinct deps using the same query
         let depList = [];
         let dupeCheck;
         data.forEach(employee => {
-            dupeCheck = depList.indexOf(employee.department) === -1;
-            
+            dupeCheck = depList.indexOf(employee.department) === -1;            
             if (dupeCheck) {
                 depList = [...depList, employee.department];
             }
         });
-        console.log(depList);
+
         // inquire about them
-        // display full list of information about the department
+        inquirer.prompt({
+            name: 'department',
+            type: 'list',
+            choices: depList,
+            message: 'Which department would you like a summary of?'
+        }).then((res) => {
+            console.log('Summary for ', res.department)
+            // ok now do a summary! haha!
+            let depObj = {
+                name: res.department,
+                managers: [],
+                employees: [],
+                totalSalary: 0.00
+            }
+            
+            data.forEach(employee => {
+                if (employee.department === depObj.name) {
+                    depObj.employees = [...depObj.employees, employee.name];
+                    depObj.totalSalary += employee.salary; 
+                    // manager check
+                    if (employee.title.includes('Manager')) {
+                        depObj.managers = [...depObj.managers, employee.name];
+                    }
+                }
+            });
+            depObj.totalSalary = `$${depObj.totalSalary}`
+            // display final table of info
+            console.table(depObj);
+        })
     })
 }
