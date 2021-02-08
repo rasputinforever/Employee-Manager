@@ -35,6 +35,8 @@ const addEmployee = require('./lib/insertSQL/mysqlAddEmp.js')
 const addTitle = require('./lib/insertSQL/mysqlAddTitle.js')
 //GET data
 const getAllQuery = require('./lib/mysqlQuery.js')
+const getDepartments = require('./lib/mysqlQueryDep.js')
+const getTitles = require('./lib/mysqlQueryTitle.js')
 
 
 // starts here
@@ -81,27 +83,15 @@ initEmpMan();
 // these will be spun into their own module(s)
 
 function createEmp() {
-    getAllQuery().then((data) => {
-        let depList = [];
-        let titlList = [];
-        let dupeDepCheck;
-        let dupeTitlCheck;
-        data.forEach(employee => {
-            dupeDepCheck = depList.indexOf(employee.department) === -1;            
-            if (dupeDepCheck) {
-                depList = [...depList, employee.department];
-            }
-
-            dupeTitlCheck = depList.indexOf(employee.title) === -1;            
-            if (dupeTitlCheck) {
-                titlList = [...titlList, employee.title];
-            }
-        });
-        console.log(depList);
-        console.log(titleList);
+    getDepartments().then((depList) => {
+            console.log(depList);
+            getTitles().then((titlList) => {
+                console.log(titlList);
+            })
         
     })
-    console.log("Coming Soon!")
+
+
 }
 function createTitl() {    
     console.log("Coming Soon!")
