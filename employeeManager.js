@@ -7,7 +7,7 @@
         // add departments, roles, and employees
             // there's a table for each of these
                 //WISHLIST: check for duplicates... 
-        // look at departments, roles, and employees -- think about what would be a practical way to 'see' this info
+        // look at departments, roles, and employees -- think about what would be a practical way to 'see' this info: DONE
                 // check on all these. Might improve later.
         // update/edite employee roles
 
@@ -17,9 +17,9 @@
         // delete any of the above
             // deleting a manager creates an odd situation where you need to re-assign each employee to a new manager
             // same with departments!
-        // combined salaray for a single department
+        // combined salaray for a single department: DONE
         
-// first thing's first... create the db! Can't quite do much without working data.
+// first thing's first... create the db! Can't quite do much without working data.: DONE
 
 // npms
 const inquirer = require('inquirer');
@@ -86,17 +86,26 @@ function createEmp() {
     getAllQuery().then((empList) => {
         
         getTitles().then((titlList) => {
-            // ok now get an inquirer going asking about what Department and Title they want to use...
-            // implicit in the chosen ROLE is the DEPARTMENT! So no need to query both.
-                // actually, we need a list of dang managers!
 
-            // pull list of titles out of array of objects
-            // pull list of unique managers by name
+            // all managers
+            let managers = [];
+            empList.forEach(employee => {
+                if (employee.title.includes('Manager')) {
+                    managers.push(employee.name);
+                } 
+            });
+
+            // all titles
+            let titles = [];
+            titlList.forEach(title => {
+                titles.push(title.title);
+            });
+
+            // inquire, then send back IDs for these two arrays above
             
-            // query for First, Last, and desired ROLE/TITLE, and desired MANAGER
-        })
-    })
-})
+        });
+    });
+
 }
 function createTitl() {    
     console.log("Coming Soon!")
