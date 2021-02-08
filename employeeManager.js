@@ -34,9 +34,9 @@ const addDepartment = require('./lib/insertSQL/mysqlAddDep.js')
 const addEmployee = require('./lib/insertSQL/mysqlAddEmp.js')
 const addTitle = require('./lib/insertSQL/mysqlAddTitle.js')
 //GET data
-const getAllQuery = require('./lib/mysqlQuery.js')
-const getDepartments = require('./lib/mysqlQueryDep.js')
-const getTitles = require('./lib/mysqlQueryTitle.js')
+const getAllQuery = require('./lib/getSQL/mysqlQuery.js')
+const getDepartments = require('./lib/getSQL/mysqlQueryDep.js')
+const getTitles = require('./lib/getSQL/mysqlQueryTitle.js')
 
 
 // starts here
@@ -82,6 +82,27 @@ initEmpMan();
 
 // these will be spun into their own module(s)
 
+// create new Title
+function createTitl() {    
+    console.log("Coming Soon!")
+    // titles require a department, so get a list of departments then PROMPT for the rest...
+    
+}
+
+// works
+
+// create new department
+function createDep() {
+    inquirer.prompt({
+        message: 'What will this Department be called?',
+        type: 'input',
+        name: 'newDep'
+    }).then((res) => {
+        addDepartment(res.newDep);
+    })
+}
+
+// creates new employee
 function createEmp() {
     console.log("Initiating CREATE EMPLOYEE...")
     getAllQuery().then((empList) => {
@@ -132,18 +153,4 @@ function createEmp() {
         });
     });
 
-}
-function createTitl() {    
-    console.log("Coming Soon!")
-}
-
-// works
-function createDep() {
-    inquirer.prompt({
-        message: 'What will this Department be called?',
-        type: 'input',
-        name: 'newDep'
-    }).then((res) => {
-        addDepartment(res.newDep);
-    })
 }
