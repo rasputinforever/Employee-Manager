@@ -83,15 +83,20 @@ initEmpMan();
 // these will be spun into their own module(s)
 
 function createEmp() {
-    getDepartments().then((depList) => {
-            console.log(depList);
-            getTitles().then((titlList) => {
-                console.log(titlList);
-            })
+    getAllQuery().then((empList) => {
         
+        getTitles().then((titlList) => {
+            // ok now get an inquirer going asking about what Department and Title they want to use...
+            // implicit in the chosen ROLE is the DEPARTMENT! So no need to query both.
+                // actually, we need a list of dang managers!
+
+            // pull list of titles out of array of objects
+            // pull list of unique managers by name
+            
+            // query for First, Last, and desired ROLE/TITLE, and desired MANAGER
+        })
     })
-
-
+})
 }
 function createTitl() {    
     console.log("Coming Soon!")
