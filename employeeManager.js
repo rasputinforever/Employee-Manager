@@ -26,9 +26,9 @@ const inquirer = require('inquirer');
 
 // modules
 // QUERY reading
-const empSummary = require('./lib/summarizeData.js')
-const depSummary = require('./lib/summarizeData.js')
-const titlSummary = require('./lib/summarizeData.js')
+const empSummary = require('./lib/summary/summarizeDataEmp.js')
+const depSummary = require('./lib/summary/summarizeDataDep.js')
+const titlSummary = require('./lib/summary/summarizeDataTitl.js')
 //QUERY adding
 const addDepartment = require('./lib/insertSQL/mysqlAddDep.js')
 const addEmployee = require('./lib/insertSQL/mysqlAddEmp.js')
@@ -83,6 +83,7 @@ initEmpMan();
 // these will be spun into their own module(s)
 
 function createEmp() {
+    console.log("Initiating CREATE EMPLOYEE...")
     getAllQuery().then((empList) => {
         
         getTitles().then((titlList) => {
@@ -102,7 +103,32 @@ function createEmp() {
             });
 
             // inquire, then send back IDs for these two arrays above
-            
+            inquirer.prompt([{
+                name: 'fName',
+                type: 'input',
+                message: `What is this employee's FIRST NAME?`
+            },{
+                name: 'lName',
+                type: 'input',
+                message: `What is this employee's LAST NAME?`
+            },{
+                name: 'title',
+                type: 'list',
+                message: `What is this employee's TITLE?`,
+                choices: titles
+            },{
+                name: 'manager',
+                type: 'list',
+                message: `What is this employee's MANAGER?`,
+                choices: managers
+            }]).then((res) => {
+                // get depID
+                const foundTitle = titlList.find(title => title.title === res.title);
+                // get manID
+                const foundEmployee = empList.find(emp => emp.name === res.manager);
+                // send 
+                addEmployee(res.fName, res.lName, foundTitle.department_id, foundEmployee.id);
+            })
         });
     });
 
