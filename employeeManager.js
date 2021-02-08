@@ -81,11 +81,32 @@ initEmpMan();
 // these will be spun into their own module(s)
 
 function createEmp() {
+    getAllQuery().then((data) => {
+        let depList = [];
+        let titlList = [];
+        let dupeDepCheck;
+        let dupeTitlCheck;
+        data.forEach(employee => {
+            dupeDepCheck = depList.indexOf(employee.department) === -1;            
+            if (dupeDepCheck) {
+                depList = [...depList, employee.department];
+            }
+
+            dupeTitlCheck = depList.indexOf(employee.title) === -1;            
+            if (dupeTitlCheck) {
+                titlList = [...titlList, employee.title];
+            }
+        });
+        console.log(depList);
+        console.log(titleList);
+        
+    })
     console.log("Coming Soon!")
 }
 function createTitl() {    
     console.log("Coming Soon!")
 }
+
 // works
 function createDep() {
     inquirer.prompt({
