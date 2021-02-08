@@ -80,10 +80,10 @@ VALUES ("Carl", "Castle", 4, 1);
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES ("Denice", "Derickson", 5, 1);
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Erik", "Eifel", 2, 2);
+VALUES ("Erik", "Eifel", 2, 5);
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Frankie", "Fitzgerald", 6, 2);
+VALUES ("Frankie", "Fitzgerald", 6, 5);
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Gary", "Gustavo", 7, 2);
+VALUES ("Gary", "Gustavo", 7, 5);
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Henrietta", "Hasselbeck", 8, 2);
+VALUES ("Henrietta", "Hasselbeck", 8, 5);
