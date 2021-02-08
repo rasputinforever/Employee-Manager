@@ -86,7 +86,7 @@ initEmpMan();
 function createTitl() {    
     console.log("Coming Soon!")
     // titles require a department, so get a list of departments then PROMPT for the rest...
-    
+
 }
 
 // works
@@ -143,12 +143,12 @@ function createEmp() {
                 message: `What is this employee's MANAGER?`,
                 choices: managers
             }]).then((res) => {
-                // get depID
+                // get roleID
                 const foundTitle = titlList.find(title => title.title === res.title);
                 // get manID
                 const foundEmployee = empList.find(emp => emp.name === res.manager);
                 // send 
-                addEmployee(res.fName, res.lName, foundTitle.department_id, foundEmployee.id);
+                addEmployee(res.fName, res.lName, foundTitle.id, foundEmployee.id);
             })
         });
     });
