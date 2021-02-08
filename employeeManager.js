@@ -133,19 +133,20 @@ function titleSUmmary() {
             let titlObj = {
                 Title: res.title,
                 Employees: [],
-                Managers: [],
+                Managers: '',
                 Salary: 0.00
             }
-            // get a list of all employees currently with that title
+            // get a list of all employees currently with that title.
+            // the assumption made here is that the salary for each person with that title is the same.
             data.forEach(employee => {
                 if (employee.title === titlObj.Title) {
                     titlObj.Employees = [...titlObj.Employees, employee.name];
                     titlObj.Salary = employee.salary; 
+                    titlObj.Managers = employee.managerID
                 } 
             });
             // get manager(s)
 
-            // get salary(s)
             
             titlObj.Salary = `$${titlObj.Salary}`
             // display final table of info
