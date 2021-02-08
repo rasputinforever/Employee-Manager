@@ -29,15 +29,10 @@ const inquirer = require('inquirer');
 const empSummary = require('./lib/summary/summarizeDataEmp.js')
 const depSummary = require('./lib/summary/summarizeDataDep.js')
 const titlSummary = require('./lib/summary/summarizeDataTitl.js')
-//QUERY adding
-const addDepartment = require('./lib/insertSQL/mysqlAddDep.js')
-const addEmployee = require('./lib/insertSQL/mysqlAddEmp.js')
-const addTitle = require('./lib/insertSQL/mysqlAddTitle.js')
-//GET data
-const getAllQuery = require('./lib/getSQL/mysqlQuery.js')
-const getDepartments = require('./lib/getSQL/mysqlQueryDep.js')
-const getTitles = require('./lib/getSQL/mysqlQueryTitle.js')
-
+// CREATE db elements
+const createEmp = require('./lib/create/createEmployee.js')
+const createDep = require('./lib/create/createDepartment.js')
+const createTitl = require('./lib/create/createTitle.js')
 
 // starts here
 function initEmpMan() {
@@ -82,103 +77,3 @@ initEmpMan();
 
 // these will be spun into their own module(s)
 
-// create new Title
-function createTitl() {    
-    console.log("Coming Soon!")
-    // titles require a department, so get a list of departments then PROMPT for the rest...
-    getDepartments().then((depList) => {
-        
-        // create array of departments
-        let departments = [];
-        depList.forEach(dep => {
-            departments.push(dep.department);
-        });
-
-        // inquire here: dep, salary, title
-        inquirer.prompt([{
-            name: 'title',
-            type: 'input',
-            message: 'What is the name of this new TITLE?'
-        },{
-            name: 'salary',
-            type: 'input',
-            message: 'What is the SALARY for this new title?'
-        },{
-            name: 'department',
-            type: 'list',
-            message: 'What DEPARTMENT will this title belong to?',
-            choices: departments
-        }]).then((res) => {
-            // get depID
-            const foundDep = depList.find(dep => dep.department === res.department);
-            // send
-            addTitle(res.title, res.salary, foundDep.id)
-        })
-    })
-}
-
-// works, move to lib modules when complete
-
-// create new department
-function createDep() {
-    inquirer.prompt({
-        message: 'What will this Department be called?',
-        type: 'input',
-        name: 'newDep'
-    }).then((res) => {
-        addDepartment(res.newDep);
-    })
-}
-
-// creates new employee
-function createEmp() {
-    console.log("Initiating CREATE EMPLOYEE...")
-    getAllQuery().then((empList) => {
-        
-        getTitles().then((titlList) => {
-
-            // all managers
-            let managers = [];
-            empList.forEach(employee => {
-                if (employee.title.includes('Manager')) {
-                    managers.push(employee.name);
-                } 
-            });
-
-            // all titles
-            let titles = [];
-            titlList.forEach(title => {
-                titles.push(title.title);
-            });
-
-            // inquire, then send back IDs for these two arrays above
-            inquirer.prompt([{
-                name: 'fName',
-                type: 'input',
-                message: `What is this employee's FIRST NAME?`
-            },{
-                name: 'lName',
-                type: 'input',
-                message: `What is this employee's LAST NAME?`
-            },{
-                name: 'title',
-                type: 'list',
-                message: `What is this employee's TITLE?`,
-                choices: titles
-            },{
-                name: 'manager',
-                type: 'list',
-                message: `What is this employee's MANAGER?`,
-                choices: managers
-            }]).then((res) => {
-                // get roleID
-                const foundTitle = titlList.find(title => title.title === res.title);
-                // get manID
-                const foundEmployee = empList.find(emp => emp.name === res.manager);
-                // send 
-                addEmployee(res.fName, res.lName, foundTitle.id, foundEmployee.id);
-            })
-        });
-    });
-
-}
