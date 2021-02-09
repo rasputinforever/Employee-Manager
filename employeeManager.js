@@ -1,40 +1,30 @@
 // employee manager
-// I installed express... but I don't think we actually needed it.
 // INQUIRER is the user interface.
+// mysql is the db
+// async interactions is the name of the game
 
 // initiate code
-    // mandatory tools:
-        // add departments, roles, and employees: DONE
-            // there's a table for each of these: Not sure what this was for
-                //WISHLIST: check for duplicates... 
-        // look at departments, roles, and employees -- think about what would be a practical way to 'see' this info: DONE
-                // check on all these. Might improve later.
-        // update/edite employee roles
 
     // "extras" suggested to add if possible
-        // edit who an employee's manager is
         // view all employees under a manager
         // delete any of the above
             // deleting a manager creates an odd situation where you need to re-assign each employee to a new manager
             // same with departments!
-                // sounds like HELL
-        // combined salaray for a single department: DONE
-        
-// first thing's first... create the db! Can't quite do much without working data.: DONE
+                // sounds like HELL. don't do this, that's annoying!
 
 // npms
 const inquirer = require('inquirer');
 
 // modules
-// QUERY reading
+// SUMMARIZE db elements by SELECT
 const empSummary = require('./lib/userActions/summarize/summarizeDataEmp.js')
 const depSummary = require('./lib/userActions/summarize/summarizeDataDep.js')
 const titlSummary = require('./lib/userActions/summarize/summarizeDataTitl.js')
-// CREATE db elements
+// CREATE db elements by INSERT INTO
 const createEmp = require('./lib/userActions/create/createEmployee.js')
 const createDep = require('./lib/userActions/create/createDepartment.js')
 const createTitl = require('./lib/userActions/create/createTitle.js')
-// EDIT db elements
+// EDIT db elements by UPDATE
 const editEmp = require('./lib/userActions/edit/editEmployee.js')
 
 
