@@ -158,15 +158,14 @@ function editEmp() {
                     manID: (empList.find(emp => emp.name === foundEmployee.manager)).id,
                     roleID: (titlList.find(titl => titl.title === foundEmployee.title)).id
                 }
-                
                updEmpLooper(newEmpObj, promptObjSources);
-
             })
         })
     });
 }
 
 function updEmpLooper(empObj, promptObj) {
+    // handly table for review
     console.table(`Current Elements for Employee:`, 
         {
             first_name: empObj.fName, 
@@ -188,12 +187,10 @@ function updEmpLooper(empObj, promptObj) {
         name: 'editChoice',
         type: 'list',
         message: 'Which employee element would you like to edit?',
-        choices: ['First Name', 'Last Name', 'Manager', 'Title']
+        choices: ['First Name', 'Last Name', 'Manager', 'Title', 'Exit']
     }]).then((res) => {
-
         // switch for each thing, each wiil require an inquire
         switch(res.editChoice) {
-
             case 'First Name':
                 // first and last name just require an INPUT
                 inquirer.prompt([{
@@ -201,12 +198,12 @@ function updEmpLooper(empObj, promptObj) {
                     type: 'input',
                     message: 'What do you want the FIRST NAME to be:'
                 },contPrompt]).then((res) => {
-                    empObj.fName = res.fName
-                    console.log(empObj)
+                    empObj.fName = res.fName;
                     if (res.continue) {
                         updEmpLooper(empObj, promptObj);
                     } else {
-                        console.log("Sent to UPDATE!")
+                        console.log(`Sent employee UPDATOR!`)
+                        updateEmployee(empObj);
                     }
                 })
                 break;
@@ -229,26 +226,40 @@ function updEmpLooper(empObj, promptObj) {
             case 'Manager':
                 // manager
                 inquirer.prompt([{
-                    name: 'lName',
-                    type: 'input',
-                    message: 'What do you want the LAST NAME to be:'
+                    name: 'manager',
+                    type: 'list',
+                    message: 'Which MANAGER should be assigned to this employee:',
+                    choices: promptObj.managers
                 },contPrompt]).then((res) => {
-                    empObj.lName = res.lName
+                    empObj.manID = promptObj.managers.indexOf(res.manager) + 1;
                     if (res.continue) {
                         updEmpLooper(empObj, promptObj);
                     } else {
                         console.log("Sent to UPDATE!")
                     }
                 })
-                break
+                break;
             case 'Title':
+                // title
+                inquirer.prompt([{
+                    name: 'title',
+                    type: 'list',
+                    message: 'Which TITLE should be assigned to this employee:',
+                    choices: promptObj.titles
+                },contPrompt]).then((res) => {
+                    empObj.roleID = promptObj.titles.indexOf(res.title) + 1;
+                    if (res.continue) {
+                        updEmpLooper(empObj, promptObj);
+                    } else {
+                        console.log("Sent to UPDATE!")
+                    }
+                })
                 break;
             default:
-                console.log("Something went wrong...")
+                console.log("Process Ended.")
+                break;
         }
     })
-
-// updateEmployee(id, fName, lName, manID, roleID)
 }
 
 
