@@ -167,6 +167,14 @@ function editEmp() {
 }
 
 function updEmpLooper(empObj, promptObj) {
+    console.table(`Current Elements for Employee:`, 
+        {
+            first_name: empObj.fName, 
+            last_name: empObj.lName, 
+            manager: promptObj.managers[empObj.manID - 1], 
+            title: promptObj.titles[empObj.roleID - 1]
+        }
+    )
 
     // this is our standard "do you want to continue" prompt we'll use to initiate callback or complete
     const contPrompt = {
@@ -185,6 +193,7 @@ function updEmpLooper(empObj, promptObj) {
 
         // switch for each thing, each wiil require an inquire
         switch(res.editChoice) {
+
             case 'First Name':
                 // first and last name just require an INPUT
                 inquirer.prompt([{
@@ -192,7 +201,8 @@ function updEmpLooper(empObj, promptObj) {
                     type: 'input',
                     message: 'What do you want the FIRST NAME to be:'
                 },contPrompt]).then((res) => {
-                    empObj.fname = res.fName
+                    empObj.fName = res.fName
+                    console.log(empObj)
                     if (res.continue) {
                         updEmpLooper(empObj, promptObj);
                     } else {
@@ -200,10 +210,37 @@ function updEmpLooper(empObj, promptObj) {
                     }
                 })
                 break;
+
             case 'Last Name':
+                inquirer.prompt([{
+                    name: 'lName',
+                    type: 'input',
+                    message: 'What do you want the LAST NAME to be:'
+                },contPrompt]).then((res) => {
+                    empObj.lName = res.lName
+                    if (res.continue) {
+                        updEmpLooper(empObj, promptObj);
+                    } else {
+                        console.log("Sent to UPDATE!")
+                    }
+                })
                 break;
+
             case 'Manager':
-                break;
+                // manager
+                inquirer.prompt([{
+                    name: 'lName',
+                    type: 'input',
+                    message: 'What do you want the LAST NAME to be:'
+                },contPrompt]).then((res) => {
+                    empObj.lName = res.lName
+                    if (res.continue) {
+                        updEmpLooper(empObj, promptObj);
+                    } else {
+                        console.log("Sent to UPDATE!")
+                    }
+                })
+                break
             case 'Title':
                 break;
             default:
