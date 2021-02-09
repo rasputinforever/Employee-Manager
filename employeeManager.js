@@ -218,7 +218,8 @@ function updEmpLooper(empObj, promptObj) {
                     if (res.continue) {
                         updEmpLooper(empObj, promptObj);
                     } else {
-                        console.log("Sent to UPDATE!")
+                        console.log("Sent to UPDATE!");
+                        updateEmployee(empObj);
                     }
                 })
                 break;
@@ -235,7 +236,8 @@ function updEmpLooper(empObj, promptObj) {
                     if (res.continue) {
                         updEmpLooper(empObj, promptObj);
                     } else {
-                        console.log("Sent to UPDATE!")
+                        console.log("Sent to UPDATE!");
+                        updateEmployee(empObj);
                     }
                 })
                 break;
@@ -251,7 +253,8 @@ function updEmpLooper(empObj, promptObj) {
                     if (res.continue) {
                         updEmpLooper(empObj, promptObj);
                     } else {
-                        console.log("Sent to UPDATE!")
+                        console.log("Sent to UPDATE!");
+                        updateEmployee(empObj);
                     }
                 })
                 break;
