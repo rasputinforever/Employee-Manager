@@ -25,7 +25,7 @@ const createEmp = require('./lib/userActions/create/createEmployee.js')
 const createDep = require('./lib/userActions/create/createDepartment.js')
 const createTitl = require('./lib/userActions/create/createTitle.js')
 // EDIT db elements by UPDATE
-const editEmp = require('./lib/userActions/edit/editEmployee.js')
+const editEmp = require('./lib/userActions/edit/editEmployeeGathers.js')
 
 
 // starts here
