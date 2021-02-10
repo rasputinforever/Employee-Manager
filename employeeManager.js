@@ -1,16 +1,16 @@
-// employee manager
-// INQUIRER is the user interface.
-// mysql is the db
-// async interactions is the name of the game
-
-// initiate code
-
-    // "extras" suggested to add if possible
-        // view all employees under a manager
-        // delete any of the above
-            // deleting a manager creates an odd situation where you need to re-assign each employee to a new manager
-            // same with departments!
-                // sounds like HELL. don't do this, that's annoying!
+//employee manager inquirer!
+// new pseudocode for further improvements
+// any missing features for assigned work?
+    // BONUS: View employees by manager
+    // Delete departments, roles, and employees
+        // possible to stick this into the EDITOR?
+            // use the editing pathway, give an option to delete, send to DELETE SQL function
+            // https://www.w3schools.com/sql/sql_delete.asp
+// features that would be nice to have
+    // a callback to the start of the script
+    // an inquirer pre-amble that can deliver a "how-to", or at the very least, a welcome message. ASCII???
+    // edit department
+    // edit titles
 
 // npms
 const inquirer = require('inquirer');
@@ -27,8 +27,9 @@ const createTitl = require('./lib/userActions/create/createTitle.js')
 // EDIT db elements by UPDATE
 const editEmp = require('./lib/userActions/edit/editEmployeeGathers.js')
 
+// pre-amble here, ASCII ART, etc, for INITIAL run!
 
-// starts here
+// main menu, should be target of callback
 function initEmpMan() {
     console.log("Welcome to Employee Manager!")
     inquirer.prompt([{
@@ -36,7 +37,8 @@ function initEmpMan() {
         type: 'list',
         choices: ['Summary of Employees', 'Summary of Job Titles', 'Summary of Departments',
                     'Create new Employee', 'Create new Title', 'Create new Department',
-                    'Edit Employee', 'Edit Title', 'Edit Department'],
+                    'Edit Employee', 'Edit Title', 'Edit Department',
+                    'Exit'],
         message: 'To begin, pelase select one of the following...'
     }]).then((res) => {
         // get the read info here. Used for ALL subsequent functions!
@@ -69,7 +71,7 @@ function initEmpMan() {
                 editDep();
                 break;
             default:
-                console.log("coming soon!")
+                console.log("See you Next Time!")
                 break;
         }
             
