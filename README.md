@@ -13,7 +13,7 @@ Employee Manager is a node.js application that allows the management of a mySQL-
 
 * SQL Seed => Be sure to CREATE your copy of your employee manager database! Located within ./Assetts is a .sql file with the code needed for your database AND some demonstration INSERT INTO data.
 
-![employeeManager.sql]('./assetts/readmeImages/empManSEED.PNG')
+![employeeManager.sql](./assetts/readmeImages/empManSEED.PNG)
 
 * SQL DB Connection => Be sure to UPDATE the 'connection.js' file in the './SQLmodules' folder with your specific DB credentials!
 
