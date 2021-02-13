@@ -48,9 +48,15 @@ Better than console.log, [console.table](https://www.npmjs.com/package/console.t
 ## Desired Improvements
 
 ### Consolidation of Modules
-Much of the "lib" folders could be consolidated into a handful of module js files. Instead of over a dozen mySQL script files, using more variables and refactoring could result in fewer files!
+1. **Too many scripts...** Much of the "lib" folders could be consolidated into a handful of module js files. Instead of over a dozen mySQL script files, using more variables and refactoring could result in fewer files!
 
 ![sqlList](./assetts/readmeImages/sqlList.PNG)
+
+*Update 02-13-21:* By finding the common thread between all the various SQL actions, aside from the "gets", it was possible to move a chunk of the SQL statement to the point in the scripts where those sql scripts were called. What's left was able to be consolidated. Once the INSERT, DELETE, and UPDATE scripts were consolidated to a single script each, those three actions could be consolidated to a single file and exported.
+
+![sqlList v2](./assetts/readmeImages/sqlList2.PNG)
+
+This sets up the potential to refine that script further. With more time it would be possible to consolidate further.
 
 ## Credits
 
